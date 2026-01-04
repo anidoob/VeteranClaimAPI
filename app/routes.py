@@ -1,5 +1,5 @@
 from flask import Blueprint, jsonify, request
-from app.models import create_claim
+
 
 claims_bp = Blueprint("claims", __name__)
 
@@ -7,6 +7,7 @@ claims_bp = Blueprint("claims", __name__)
 def health():
     return jsonify({"status" : "ok"}), 200
 
+from app.models import create_claim
 @claims_bp.route("/claims", methods=["POST"])
 def submit_claim():
     data = request.get_json()
@@ -22,3 +23,18 @@ def submit_claim():
         return jsonify(claim), 201
     except Exception as e:
         return jsonify({"error": str(e)}), 500
+
+from app.models import get_all_claims
+@claims_bp.route("/claims", methods=["GET"])
+def list_claims():
+    return jsonify(get_all_claims()), 200
+
+from app.models import get_claim
+@claims_bp.route("/claims/<claim_id>", methods=["GET"])
+def fetch_claim(claim_id):
+    claim = get_claim(claim_id)
+
+    if not claim:
+        return jsonify({"error" : "Claim not found"}), 404
+
+    return jsonify(claim), 200
