@@ -30,3 +30,9 @@ def create_claim(veteran_id, claim_type):
 
     CLAIMS_DB[claim_id] = claim
     return claim
+
+def get_claim(claim_id):
+    return CLAIMS_DB.get(claim_id)
+
+def get_all_claims():
+    return list(CLAIMS_DB.values())
