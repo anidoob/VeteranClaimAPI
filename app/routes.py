@@ -50,4 +50,4 @@ def patch_status(claim_id):
     claim = update_status(claim_id, data["status"])
     if not claim:
         return jsonify({"error" : "Invalid status or claim not found"}), 400
-    return jsonify(claim)
+    return jsonify(claim), 200
