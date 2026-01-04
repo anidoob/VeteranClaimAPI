@@ -39,7 +39,7 @@ def get_all_claims():
 
 def update_status(claim_id, status):
     try:
-        new_status = ClaimStatus(status)
+        new_status = ClaimStatus(status).value
     except ValueError:
         return None
 

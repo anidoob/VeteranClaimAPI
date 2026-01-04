@@ -38,3 +38,16 @@ def fetch_claim(claim_id):
         return jsonify({"error" : "Claim not found"}), 404
 
     return jsonify(claim), 200
+
+from app.models import update_status
+@claims_bp.route("/claims/<claim_id>/update", methods=["PATCH"])
+def patch_status(claim_id):
+    data = request.get_json()
+
+    if not data or "status" not in data:
+        return jsonify({"error" : "Status not found"}), 400
+
+    claim = update_status(claim_id, data["status"])
+    if not claim:
+        return jsonify({"error" : "Invalid status or claim not found"}), 400
+    return jsonify(claim)
