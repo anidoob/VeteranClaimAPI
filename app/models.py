@@ -24,7 +24,7 @@ def create_claim(veteran_id, claim_type):
         "claim_id" : claim_id,
         "veteran_id" : veteran_id,
         "claim_type" : claim_type,
-        "status" : ClaimStatus.RECEIVED,
+        "status" : ClaimStatus.RECEIVED.value,
         "submitted_at" : datetime.now(timezone.utc).isoformat(timespec="seconds"),
     }
 
