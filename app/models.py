@@ -36,3 +36,16 @@ def get_claim(claim_id):
 
 def get_all_claims():
     return list(CLAIMS_DB.values())
+
+def update_status(claim_id, status):
+    try:
+        new_status = ClaimStatus(status)
+    except ValueError:
+        return None
+
+    claim = CLAIMS_DB.get(claim_id)
+    if not claim:
+        return None
+
+    claim["status"] = new_status
+    return claim
