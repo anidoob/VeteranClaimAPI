@@ -1,6 +1,7 @@
 import pytest
 from app import create_app
-from app.models import CLAIMS_DB
+import sqlite3
+#from app.models import CLAIMS_DB
 
 
 @pytest.fixture
@@ -9,7 +10,11 @@ def client():
     app.config['TESTING'] = True
     with app.test_client() as client:
         yield client
-    CLAIMS_DB.clear()
+    conn = sqlite3.connect('claims.db')
+    conn.execute('DELETE FROM claims')
+    conn.commit()
+    conn.close()
+    #CLAIMS_DB.clear()
 
 
 def test_health(client):
